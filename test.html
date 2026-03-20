@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- 2. The CSS (Ensures it doesn't have 0px height) -->
+    <style>
+      .test-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        min-height: 600px; /* Adjust based on the widget's actual height */
+      }
+      .ctone-widget {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. The Container (Required for layout and size) -->
+    <div class="test-container">
+      <div class="ctone-widget" data-ctone-type="ctone/widgets/HearingTest">
+        <!-- Fallback link if JS is disabled -->
+        <a
+          class="ctone-widget-link"
+          href="https://testmyhearing.net"
+          target="_blank"
+          rel="noopener"
+        >
+          Take the Free Online Hearing Test
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. The Script (Loads the interactive test) -->
+    <script type="text/javascript" src="https://ctonelimited.com"></script>
+  </body>
+</html>
