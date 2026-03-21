@@ -1050,16 +1050,12 @@ p {
 }
 
 .photo-placeholder {
-  width: 320px;
+  width: 520px;
+  height: 360px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   background: var(--cream-light);
-}
-
-.photo-placeholder svg {
-  width: 100%;
-  height: auto;
 }
 
 .about-badge {
