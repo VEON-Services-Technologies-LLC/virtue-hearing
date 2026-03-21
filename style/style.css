@@ -460,6 +460,7 @@ p {
 }
 
 .hero-collage {
+  margin-top: 50px;
   position: relative;
   display: flex;
   flex-direction: column;
