@@ -5,7 +5,7 @@
 
 /* ── CSS Variables ── */
 :root {
-  --primary: rgb(244, 142, 39); /* amber */
+  --primary: #f48e27; /* amber */
   --primary-dark: rgb(214, 115, 20);
   --secondary: rgb(236, 31, 36); /* red */
   --secondary-dark: rgb(190, 20, 25);
@@ -1540,6 +1540,10 @@ a.contact-info-item:hover {
   font-size: 0.78rem;
   color: rgba(240, 240, 240, 0.4);
   margin: 0;
+}
+
+.white-logo {
+  filter: brightness(0) invert(1);
 }
 
 /* ============================================================
