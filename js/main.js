@@ -1,93 +1,133 @@
 /**
  * VIRTUE HEARING AID CENTER — main.js
- * Handles: Navbar scroll, scroll animations, smooth anchors, active nav links
+ * Handles: footer year, navbar scroll state, scroll reveal, smooth anchors,
+ * active nav link tracking, mobile menu auto-close.
  */
+(function () {
+  "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ── Footer year ──────────────────────────────────────────
-  const yearEl = document.getElementById("footerYear");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  document.addEventListener("DOMContentLoaded", init);
 
-  // ── Navbar scroll behavior ────────────────────────────────
-  const navbar = document.getElementById("mainNav");
-  if (!navbar) return;
-
-  function updateNavbar() {
-    navbar.classList.toggle("scrolled", window.scrollY > 40);
+  function init() {
+    setFooterYear();
+    setupNavbar();
+    setupScrollReveal();
+    setupSmoothAnchors();
   }
 
-  window.addEventListener("scroll", updateNavbar, { passive: true });
-  updateNavbar();
+  function setFooterYear() {
+    const yearEl = document.getElementById("footerYear");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  }
 
-  // ── Close mobile menu on nav link click ───────────────────
-  const navCollapse = document.getElementById("navbarMenu");
-  const bsCollapse = navCollapse
-    ? bootstrap.Collapse.getOrCreateInstance(navCollapse, { toggle: false })
-    : null;
+  function setupNavbar() {
+    const navbar = document.getElementById("mainNav");
+    if (!navbar) return;
 
-  navbar.querySelectorAll(".nav-link, .nav-cta").forEach((link) => {
-    link.addEventListener("click", () => {
-      if (navCollapse?.classList.contains("show") && bsCollapse) {
-        bsCollapse.hide();
-      }
-    });
-  });
+    const navCollapse = document.getElementById("navbarMenu");
+    const bsCollapse =
+      navCollapse && window.bootstrap
+        ? window.bootstrap.Collapse.getOrCreateInstance(navCollapse, {
+            toggle: false,
+          })
+        : null;
 
-  // ── Scroll reveal (Intersection Observer) ─────────────────
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          revealObserver.unobserve(entry.target);
+    // Close mobile menu on any nav link click
+    navbar.querySelectorAll(".nav-link, .nav-cta").forEach((link) => {
+      link.addEventListener("click", () => {
+        if (navCollapse?.classList.contains("show") && bsCollapse) {
+          bsCollapse.hide();
         }
       });
-    },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
-  );
-
-  document
-    .querySelectorAll(".reveal-up, .reveal-left, .reveal-right")
-    .forEach((el) => revealObserver.observe(el));
-
-  // ── Smooth anchor scrolling (offset for fixed navbar) ─────
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      const target = document.querySelector(this.getAttribute("href"));
-      if (!target) return;
-      e.preventDefault();
-      const offset = navbar.offsetHeight + 16;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
     });
-  });
 
-  // ── Active nav link on scroll ─────────────────────────────
-  const sections = document.querySelectorAll("section[id]");
+    // Single scroll handler with rAF batching
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        navbar.classList.toggle("scrolled", window.scrollY > 40);
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
-  function updateActiveLink() {
-    const scrollPos = window.scrollY + 100;
+    setupActiveLinkObserver(navbar);
+  }
+
+  // Use IntersectionObserver instead of reading offsetTop on every scroll.
+  function setupActiveLinkObserver(navbar) {
+    const sections = document.querySelectorAll("section[id]");
+    if (!sections.length) return;
+
+    const links = new Map();
     sections.forEach((section) => {
       const id = section.getAttribute("id");
       const link = navbar.querySelector(`.nav-link[href="#${id}"]`);
-      if (link) {
-        const active =
-          scrollPos >= section.offsetTop &&
-          scrollPos < section.offsetTop + section.offsetHeight;
-        link.classList.toggle("active", active);
-      }
+      if (link) links.set(id, link);
     });
+    if (!links.size) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = links.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            links.forEach((l) => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
   }
 
-  window.addEventListener("scroll", updateActiveLink, { passive: true });
-  updateActiveLink();
-});
+  function setupScrollReveal() {
+    const items = document.querySelectorAll(
+      ".reveal-up, .reveal-left, .reveal-right",
+    );
+    if (!items.length) return;
 
-// ── Active nav + spinner styles (injected once) ───────────
-const s = document.createElement("style");
-s.textContent = `
-  .nav-link.active { color: var(--primary) !important; font-weight: 600 !important; }
-  .spin-icon { animation: spin 0.8s linear infinite; flex-shrink: 0; }
-  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-`;
-document.head.appendChild(s);
+    // Skip reveal animation when user prefers reduced motion.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      items.forEach((el) => el.classList.add("revealed"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    items.forEach((el) => observer.observe(el));
+  }
+
+  function setupSmoothAnchors() {
+    const navbar = document.getElementById("mainNav");
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+        if (href === "#" || href === "#!") return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const offset = (navbar?.offsetHeight || 0) + 16;
+        const top =
+          target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
+  }
+})();
