@@ -1061,11 +1061,20 @@ p {
 
 .photo-placeholder {
   width: 520px;
-  height: 360px;
+  max-width: 100%;
+  aspect-ratio: 900 / 506;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   background: var(--cream-light);
+}
+
+.photo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 .about-badge {
@@ -1307,6 +1316,29 @@ a.contact-info-item:hover {
 .contact-form-card > p {
   font-size: 0.92rem;
   margin-bottom: 28px;
+}
+
+/* GHL form embed — fills the card, never collapses, scales on mobile */
+.form-embed-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.ghl-form-iframe {
+  width: 100%;
+  min-height: 810px;
+  border: none;
+  border-radius: var(--radius-sm);
+  display: block;
+  background: var(--white);
+  overflow: hidden;
+}
+
+/* ============================================================
+   BLOG TEASER
+   ============================================================ */
+.blog-teaser-section {
+  background: var(--off-white);
 }
 
 /* ============================================================

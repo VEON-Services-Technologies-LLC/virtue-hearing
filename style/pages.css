@@ -89,12 +89,13 @@
   background: var(--white);
 }
 
+/* Single seamless container — no nested boxes around the GHL calendar */
 .calendar-wrap {
-  background: var(--cream-light);
+  background: var(--white);
   border-radius: var(--radius-xl);
-  padding: 40px;
-  border: 1px solid rgba(215, 177, 144, 0.3);
-  min-height: 700px;
+  padding: 32px 32px 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
 }
 
 .calendar-wrap h3 {
@@ -104,13 +105,21 @@
 
 .calendar-wrap > p {
   font-size: 0.92rem;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .calendar-iframe-wrap {
-  border-radius: var(--radius-lg);
+  background: transparent;
+  border-radius: 0;
+}
+
+/* GHL booking calendar — fills width, never collapses; form_embed.js resizes it */
+.ghl-calendar-iframe {
+  width: 100%;
+  min-height: 720px;
+  border: none;
+  display: block;
   overflow: hidden;
-  background: var(--white);
 }
 
 .booking-info {
@@ -168,6 +177,36 @@
 
 .booking-phone-link:hover {
   color: var(--primary-dark);
+}
+
+/* ============================================================
+   BLOG PAGE (Soro embed)
+   ============================================================ */
+.blog-content {
+  padding: 56px 0 80px;
+  background: var(--white);
+}
+
+/* Soro embed container — give it room before the script hydrates it */
+#soro-blog {
+  min-height: 480px;
+  width: 100%;
+}
+
+.blog-cta {
+  background: var(--cream-light);
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+}
+
+.blog-cta h2 {
+  margin-bottom: 14px;
+}
+
+.blog-cta p {
+  max-width: 520px;
+  margin: 0 auto 28px;
+  font-size: 1.05rem;
 }
 
 /* ============================================================
