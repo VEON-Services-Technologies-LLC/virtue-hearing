@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hearing Health Blog | Virtue Hearing Aid Center</title>
+    <title>Hearing Health Blog | Hearing Loss, Hearing Aids & Hearing Consultations | Virtue Hearing</title>
     <meta
       name="description"
-      content="Tips and insights on hearing loss, hearing aids, and hearing health from the specialists at Virtue Hearing Aid Center in Montebello, CA."
+      content="Expert articles on hearing loss prevention, hearing aid benefits, tinnitus management, and hearing health tips from certified specialists at Virtue Hearing Aid Center in Montebello, CA. Free hearing consultation available."
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://virtuehearing.com/blog.html" />
@@ -18,7 +18,7 @@
     />
     <meta
       property="og:description"
-      content="Tips and insights on hearing loss, hearing aids, and hearing health from the specialists at Virtue Hearing Aid Center."
+      content="Expert hearing health articles covering hearing loss, hearing aids, tinnitus management, and hearing consultations from Virtue Hearing Aid Center specialists."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://virtuehearing.com/blog.html" />
@@ -101,6 +101,27 @@
     <!-- Site CSS -->
     <link rel="stylesheet" href="./style/style.css" />
     <link rel="stylesheet" href="./style/pages.css" />
+
+    <!-- Schema Markup: Blog Collection Page -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Hearing Health Blog",
+      "description": "Expert articles on hearing loss, hearing aids, tinnitus, and hearing health from Virtue Hearing Aid Center",
+      "url": "https://virtuehearing.com/blog.html",
+      "publisher": {
+        "@type": "HearingAidProvider",
+        "name": "Virtue Hearing Aid Center",
+        "url": "https://virtuehearing.com"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Hearing Health Articles",
+        "description": "Collection of expert-reviewed articles on hearing loss, hearing aids, consultations, and hearing health"
+      }
+    }
+    </script>
   </head>
   <body>
     <!-- ===== NAVBAR ===== -->
@@ -212,12 +233,19 @@
         </a>
 
         <!-- Soro blog embed -->
-        <div style="display: flex; justify-content: center; align-items: center; min-height: 600px;">
-          <div id="soro-blog" style="width: 100%; max-width: 900px;"></div>
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 600px; background: #fff; border-radius: 8px;">
+          <div id="soro-blog" style="width: 100%; max-width: 900px; padding: 20px;"></div>
           <script
             src="https://app.trysoro.com/api/embed/06eb0fb1-8f12-4739-94ec-6c8e3789a028"
+            type="text/javascript"
             defer
+            async
           ></script>
+          <noscript>
+            <p style="text-align: center; padding: 40px 20px; color: #767676;">
+              JavaScript is required to display the blog content. Please enable JavaScript in your browser.
+            </p>
+          </noscript>
         </div>
       </div>
     </section>
