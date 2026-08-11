@@ -1637,11 +1637,14 @@
                     if (!validateAll()) return;
                     btn.classList.add('loading');
                     btn.disabled = true;
-                    syncToGHL();
 
+                    // Check if GHL form exists before trying to sync
                     var ghlBtn = document.querySelector(GHL.submit);
                     if (ghlBtn) {
+                      syncToGHL();
                       setTimeout(function () { ghlBtn.click(); }, 120);
+                    } else {
+                      console.log('GHL form not found - proceeding without external form sync');
                     }
 
                     setTimeout(showSuccess, 2000);
@@ -1688,7 +1691,19 @@
         <div style="display: flex; justify-content: center; align-items: center; min-height: 600px; background: #fff; border-radius: 8px; padding: 20px;">
           <div id="soro-blog" style="width: 100%; max-width: 900px;"></div>
         </div>
-        <script src="https://app.trysoro.com/api/embed/06eb0fb1-8f12-4739-94ec-6c8e3789a028" type="text/javascript" defer></script>
+        <!-- Soro embed script - loaded with guard to prevent double loading -->
+        <script>
+        (function() {
+          if (window.SORO_BLOG_LOADED) return; // Prevent double loading
+          window.SORO_BLOG_LOADED = true;
+          const script = document.createElement('script');
+          script.src = 'https://app.trysoro.com/api/embed/06eb0fb1-8f12-4739-94ec-6c8e3789a028';
+          script.type = 'text/javascript';
+          script.defer = true;
+          script.onerror = function() { console.warn('Soro embed script failed to load'); };
+          document.body.appendChild(script);
+        })();
+        </script>
         <noscript>
           <p style="text-align: center; padding: 40px 20px; color: #767676;">
             JavaScript is required to display blog content. Please enable JavaScript in your browser or <a href="./blog.html" style="color: #f48e27;">visit our blog page</a>.
