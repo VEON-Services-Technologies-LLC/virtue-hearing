@@ -1,9 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /assets/
-Disallow: /js/
-Disallow: /style/
 Crawl-delay: 1
 
 User-agent: AdsBot-Google

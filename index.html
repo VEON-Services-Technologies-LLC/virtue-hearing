@@ -22,8 +22,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://virtuehearing.com/" />
   <meta property="og:image" content="https://virtuehearing.com/assets/imgs/og-image.png" />
-  <meta property="og:image:width" content="900" />
-  <meta property="og:image:height" content="506" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Christopher Medina, second-generation hearing aid specialist at Virtue Hearing Aid Center" />
   <meta property="og:site_name" content="Virtue Hearing Aid Center" />
   <meta property="og:locale" content="en_US" />
@@ -940,7 +940,7 @@
 
         <!-- Video - Full Width -->
         <div class="carecredit-video-container reveal-up" style="--delay: 0.2s">
-          <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/3zKhAJzorvg?si=v4PBmz3q8zIcfsXo&amp;controls=0&amp;start=1" title="CareCredit Financing Options - Virtue Hearing Aid Center" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/3zKhAJzorvg?si=v4PBmz3q8zIcfsXo&amp;controls=0&amp;start=1" title="CareCredit Financing Options - Virtue Hearing Aid Center" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
 
         <!-- Two Column Layout -->
@@ -1873,17 +1873,36 @@
         <div style="display: flex; justify-content: center; align-items: center; min-height: 600px; background: #fff; border-radius: 8px; padding: 20px;">
           <div id="soro-blog" style="width: 100%; max-width: 900px;"></div>
         </div>
-        <!-- Soro embed script - loaded with guard to prevent double loading -->
+        <!-- Soro embed script - lazy-loaded when the section nears the viewport, with a guard to prevent double loading -->
         <script>
         (function() {
-          if (window.SORO_BLOG_LOADED) return; // Prevent double loading
-          window.SORO_BLOG_LOADED = true;
-          const script = document.createElement('script');
-          script.src = 'https://app.trysoro.com/api/embed/06eb0fb1-8f12-4739-94ec-6c8e3789a028';
-          script.type = 'text/javascript';
-          script.defer = true;
-          script.onerror = function() { console.warn('Soro embed script failed to load'); };
-          document.body.appendChild(script);
+          function loadSoro() {
+            if (window.SORO_BLOG_LOADED) return; // Prevent double loading
+            window.SORO_BLOG_LOADED = true;
+            const script = document.createElement('script');
+            script.src = 'https://app.trysoro.com/api/embed/06eb0fb1-8f12-4739-94ec-6c8e3789a028';
+            script.type = 'text/javascript';
+            script.defer = true;
+            script.onerror = function() { console.warn('Soro embed script failed to load'); };
+            document.body.appendChild(script);
+          }
+
+          const target = document.getElementById('soro-blog');
+          if (!target || !('IntersectionObserver' in window)) {
+            loadSoro();
+            return;
+          }
+
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                loadSoro();
+                observer.disconnect();
+              }
+            });
+          }, { rootMargin: '600px 0px' });
+
+          observer.observe(target);
         })();
         </script>
         <noscript>
@@ -1959,7 +1978,7 @@
     </footer>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <!-- Custom JS -->
     <script src="./js/main.js" defer></script>
   </body>
