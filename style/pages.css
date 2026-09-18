@@ -829,6 +829,113 @@
 }
 
 /* ============================================================
+   CALL-US LANDING PAGE
+   ============================================================ */
+.call-hero-cta {
+  margin-top: 36px;
+}
+
+.call-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--primary);
+  color: var(--white);
+  border: 2px solid var(--primary);
+  padding: 22px 40px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  font-family: "DM Sans", sans-serif;
+  transition: var(--transition);
+  cursor: pointer;
+  box-shadow: var(--shadow-warm);
+  text-decoration: none;
+}
+
+.call-cta-btn:hover,
+.call-cta-btn:focus-visible {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(244, 142, 39, 0.4);
+}
+
+.call-cta-btn .call-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  animation: call-ring 2.2s ease-in-out infinite;
+}
+
+@keyframes call-ring {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  8% {
+    transform: rotate(-15deg);
+  }
+  16% {
+    transform: rotate(12deg);
+  }
+  24% {
+    transform: rotate(-10deg);
+  }
+  32% {
+    transform: rotate(6deg);
+  }
+  40% {
+    transform: rotate(0deg);
+  }
+}
+
+.call-cta-note {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.call-why-section {
+  padding: 80px 0;
+  background: var(--cream-light);
+}
+
+.call-banner {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  border-radius: var(--radius-xl);
+  padding: 56px 40px;
+  text-align: center;
+  color: var(--white);
+}
+
+.call-banner h2 {
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.call-banner p {
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 480px;
+  margin: 0 auto 28px;
+}
+
+.call-banner .call-cta-btn {
+  background: var(--white);
+  color: var(--accent-dark);
+  border-color: var(--white);
+}
+
+.call-banner .call-cta-btn:hover,
+.call-banner .call-cta-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--accent-dark);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 991.98px) {
@@ -890,6 +997,19 @@
   }
   .trust-bar {
     gap: 12px;
+  }
+  .call-cta-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 1.15rem;
+    padding: 18px 24px;
+  }
+  .call-why-section {
+    padding: 56px 0;
+  }
+  .call-banner {
+    padding: 40px 24px;
+    border-radius: var(--radius-lg);
   }
   .back-link {
     margin-bottom: 24px;
