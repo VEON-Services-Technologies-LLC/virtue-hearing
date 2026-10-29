@@ -84,7 +84,6 @@
     // Check if any elements still have opacity 0
     const hiddenElements = document.querySelectorAll('.reveal-up:not(.revealed), .reveal-left:not(.revealed), .reveal-right:not(.revealed)');
     if (hiddenElements.length > 0) {
-      console.warn(`Found ${hiddenElements.length} unrevealed elements. Forcing visibility.`);
       hiddenElements.forEach(el => {
         el.classList.add('revealed');
       });
@@ -106,11 +105,8 @@
     // Check if Soro script already exists
     const existingScript = document.querySelector('script[src*="trysoro.com"]');
     if (existingScript && window.Soro) {
-      console.log('Soro already loaded');
       return;
     }
-
-    console.log('Loading Soro embed...');
     // Script should load automatically if included in HTML with defer
   }
 
