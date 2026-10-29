@@ -1721,6 +1721,20 @@ a.contact-info-item:hover {
   background: var(--white);
 }
 
+/* Lead form embed (GHL native form iframe) */
+.ghl-form-wrap.ghl-form-wrap--lead {
+  margin: 0 auto;
+  min-height: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.ghl-form-wrap.ghl-form-wrap--lead iframe {
+  min-height: 480px;
+  background: transparent;
+}
+
 /* Calendar embed (book page) */
 .calendar-iframe-wrap {
   border-radius: var(--radius-lg);

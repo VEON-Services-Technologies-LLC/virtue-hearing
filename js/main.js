@@ -120,29 +120,3 @@
     setupSoro();
   }
 })();
-
-// ===== Form Error Handling =====
-// Safely handle GHL form integration with fallbacks
-(function() {
-  // Wait for DOM and external forms to load
-  window.addEventListener('load', function() {
-    const ghlElements = {
-      fullName: '#full_name',
-      email: '#email',
-      phone: '#phone',
-      submit: 'button.btn-dark.button-element'
-    };
-
-    // Check if GHL elements exist
-    const hasGHL = Object.values(ghlElements).every(selector =>
-      document.querySelector(selector)
-    );
-
-    if (!hasGHL) {
-      console.warn('GHL form elements not found. This is normal if using a different form builder.');
-      // The form will still work, just won't sync to external system
-    } else {
-      console.log('GHL form elements found. Integration enabled.');
-    }
-  });
-})();
